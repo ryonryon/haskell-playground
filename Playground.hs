@@ -1,6 +1,7 @@
 module Playground (
   add,
   bmiTell,
+  calcBmis,
   capital,
   head',
   length',
@@ -19,9 +20,11 @@ bmiTell weight height
   | bmi <= fat = "You're fat! Lose some weight, fatty!"
   | otherwise   = "You're a whale, congratulations!"
   where bmi = weight / height ^ 2
-        skinny = 18.5
-        normal = 25.0
-        fat = 30.0
+        (skinny, normal, fat) = (18.5, 25.0, 30.0)
+
+calcBmis:: (RealFloat a) => [(a, a)] -> [a]
+calcBmis xs = [bmi w h | (w, h) <- xs]
+  where bmi weight height = weight / height ^ 2
 
 capital:: String -> String
 capital [] = "Empty string, Whoops!"
@@ -30,6 +33,11 @@ capital all@(x:xs) = "The first letter of " ++ all ++ " is " ++ [x]
 head':: [a] -> a
 head' [] = error "Can't call head on an empty list, dummy!"
 head' (x:_) = x
+
+initials:: String -> String -> String
+initials firstName lastName = [f] ++ ". " ++ [l] ++ "."
+  where (f:_) = firstName
+        (l:_) = lastName
 
 length':: (Num b) => [a] -> b
 length' [] = 0
