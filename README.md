@@ -45,6 +45,12 @@ This will generate an executable file called Hello. You can then run the executa
 ghci
 ```
 
+also you can leave GHCi by
+
+```shell
+:q
+```
+
 ### Resources
 
 http://learnyouahaskell.com/
