@@ -1,3 +1,3 @@
-import Playground.BMI
+import Playground
 
-main = do { print (bmiTell 73 1.71) }
+main = do { print (describeList [(66.2, 1.71), (50, 1.64)]) }

@@ -3,10 +3,11 @@ module Playground (
   bmiTell,
   calcBmis,
   capital,
+  describeList,
   head',
   length',
   lucky,
-  tail',
+  -- tail',
   tell,
 ) where
 
@@ -23,12 +24,22 @@ bmiTell weight height
         (skinny, normal, fat) = (18.5, 25.0, 30.0)
 
 calcBmis:: (RealFloat a) => [(a, a)] -> [a]
-calcBmis xs = [bmi w h | (w, h) <- xs]
-  where bmi weight height = weight / height ^ 2
+calcBmis xs = [bmi w h | (w, h) <- xs, let bmi w h = w / h ^ 2]
 
 capital:: String -> String
 capital [] = "Empty string, Whoops!"
 capital all@(x:xs) = "The first letter of " ++ all ++ " is " ++ [x]
+
+cylinder:: (RealFloat a) => a -> a -> a
+cylinder r h =
+  let sideArea = 2 * pi * r * h
+      topArea = pi * r ^ 2
+  in sideArea + 2 * topArea
+
+describeList:: [a] -> String
+describeList xs = "The list is " ++ case xs of [] -> "empty."
+                                               [x] -> "a singleton list."
+                                               xs -> "a longer list."
 
 head':: [a] -> a
 head' [] = error "Can't call head on an empty list, dummy!"
@@ -47,9 +58,9 @@ lucky:: (Integral a) => a -> String
 lucky 7 = "LUCK NUMBER SEVEN!!"
 lucky x = "Sorry, you are out of luck, pal!"
 
-tail':: [a] -> a
-tail' [] = error "Can't call tail on an empty list, dummy!"
-tail' ()
+-- tail':: [a] -> a
+-- tail' [] = error "Can't call tail on an empty list, dummy!"
+-- tail' ()
 
 tell :: (Show a) => [a] -> String
 tell [] = "The list is empty"
