@@ -1,3 +1,4 @@
+import Leetcode.TwoSum
 import Playground
 
-main = do { print (describeList [(66.2, 1.71), (50, 1.64)]) }
+main = do { print (twoSum [3,2,4] 6) }

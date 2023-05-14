@@ -1,18 +1,29 @@
 module Playground (
   add,
+  applyTwice,
   bmiTell,
   calcBmis,
   capital,
   describeList,
+  elem',
   head',
   length',
   lucky,
-  -- tail',
+  maximum',
+  replicate',
+  reverse',
+  tail',
+  take',
   tell,
+  zip',
+  zipWIth',
 ) where
 
 add:: Int -> Int -> Int
 add x y = x + y 
+
+applyTwice:: (a -> a) -> a -> a
+applyTwice f x = f (f x)
 
 bmiTell :: (RealFloat a) => a -> a -> String
 bmiTell weight height
@@ -41,6 +52,12 @@ describeList xs = "The list is " ++ case xs of [] -> "empty."
                                                [x] -> "a singleton list."
                                                xs -> "a longer list."
 
+elem':: (Eq a) => a -> [a] -> Bool
+elem' _ [] = False
+elem' a (x:xs)
+  | a == x = True
+  | otherwise = elem' a xs
+
 head':: [a] -> a
 head' [] = error "Can't call head on an empty list, dummy!"
 head' (x:_) = x
@@ -58,12 +75,46 @@ lucky:: (Integral a) => a -> String
 lucky 7 = "LUCK NUMBER SEVEN!!"
 lucky x = "Sorry, you are out of luck, pal!"
 
--- tail':: [a] -> a
--- tail' [] = error "Can't call tail on an empty list, dummy!"
--- tail' ()
+maximum' :: (Ord a) => [a] -> a
+maximum' [] = error "maximum of empty list!"
+maximum' [x] = x
+maximum' (x:xs)
+  | x > maxTail = x
+  | otherwise = maxTail
+  where maxTail = maximum' xs
+
+replicate':: (Num i, Ord i) => i -> a -> [a]
+replicate' n x
+  | n <= 0 = []
+  | otherwise = x:replicate' (n - 1) x
+
+reverse':: [a] -> [a]
+reverse' [] = []
+reverse' (x:xs) = reverse' xs ++ [x]
+
+tail':: [a] -> a
+tail' [] = error "Can't call tail on an empty list, dummy!"
+tail' [x] = x
+tail' (_:xs) = tail' xs
+
+take':: (Num i, Ord i) => i -> [a] -> [a]
+take' n _
+  | n <= 0 = []
+take' _ [] = []
+take' n (x:xs) = x:take' (n - 1) xs
 
 tell :: (Show a) => [a] -> String
 tell [] = "The list is empty"
-tell (x:[]) = "The list has one element: " ++ show x
-tell (x:y:[]) = "the list have two element: " ++ show x ++ " and " ++ show y
+tell [x] = "The list has one element: " ++ show x
+tell [x, y] = "the list have two element: " ++ show x ++ " and " ++ show y
 tell (x:y:_) = "the list is long. The first tow elements are: " ++ show x ++ " and " ++ show y
+
+zip':: [a] -> [b] -> [(a, b)]
+zip' _ [] = []
+zip' [] _ = []
+zip' (x:xs) (y:ys) = (x,y):zip' xs ys
+
+zipWith':: (a -> b -> c) -> [a] -> [b] -> [c]
+zipWith' _ [] _ = []
+zipWith' _ _ [] = []
+zipWIth' f (x:xs) (y:ys) = f x y : zipWith' f xs ys
