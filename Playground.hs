@@ -7,7 +7,6 @@ module Playground (
   describeList,
   elem',
   head',
-  length',
   lucky,
   maximum',
   replicate',
@@ -66,10 +65,6 @@ initials:: String -> String -> String
 initials firstName lastName = [f] ++ ". " ++ [l] ++ "."
   where (f:_) = firstName
         (l:_) = lastName
-
-length':: (Num b) => [a] -> b
-length' [] = 0
-length' (_:xs) = 1 + length' xs
 
 lucky:: (Integral a) => a -> String
 lucky 7 = "LUCK NUMBER SEVEN!!"
