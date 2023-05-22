@@ -5,8 +5,11 @@ module Questions (
   length',
   isPalindrome,
   flatten',
+  compress',
+  pack',
 ) where
 -- https://wiki.haskell.org/99_questions
+import Data.List
 
 -- 1. (*) Find the last element of a list.
 findLast:: [a] -> a
@@ -65,6 +68,26 @@ flatten' (List (x:xs)) = flatten' x ++ flatten' (List xs)
 flatten' (List []) = []
 
 -- 8. (**) Eliminate consecutive duplicates of list elements.
--- If a list contains repeated elements they should be replaced with a single copy of the element. The order of the elements should not be changed.
--- compress':: [a] -> [a]
--- compress' 
+-- If a list contains repeated elements they should be replaced with a single copy of the element.
+-- The order of the elements should not be changed.
+compress':: (Eq a) => [a] -> [a]
+compress' (x:ys@(y:_))
+    | x == y    = compress' ys
+    | otherwise = x : compress' ys
+compress' ys = ys
+-- compress' = map head . group
+
+-- 9. (**) Pack consecutive duplicates of list elements into sub-lists. 
+-- If a list contains repeated elements they should be placed in separate sub-lists.
+pack':: Eq a => [a] -> [[a]]
+pack' [] = []
+pack' (x:xs) = (x:first) : pack' rest
+  where
+    getReps [] = ([], [])
+    getReps (y:ys)
+      | y == x = let (f, r) = getReps ys in (y:f, r)
+      | otherwise = ([], y:ys)
+    (first, rest) = getReps xs
+
+-- 10. (*) Run-length encoding of a list. Use the result of problem P09 to implement the so-called run-length encoding data compression method.
+-- Consecutive duplicates of elements are encoded as lists (N E) where N is the number of duplicates of the element E.

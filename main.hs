@@ -1,4 +1,5 @@
 import Leetcode.TwoSum
 import Playground
+import Questions
 
-main = do { print (twoSum [3,2,4] 6) }
+main = do { print (findLast [5, 5, 10]) }
